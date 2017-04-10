@@ -4,3 +4,5 @@ dependency-reduced-pom.xml
 # Editor generated files
 *.iml
 .idea/
+
+.DS_Store
