@@ -216,6 +216,10 @@ public class OAuth2Constants {
          * Parameter usage location: Specify the authentication chain to use
          */
         public static final String AUTH_CHAIN = "auth_chain";
+        
+        public static final String SOCIAL_CODE = "social_code";
+        
+        public static final String SOCIAL_TYPE = "social_type";
     }
 
     public class CoreTokenParams{
