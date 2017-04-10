@@ -35,14 +35,7 @@ import javax.inject.Provider;
 
 import org.forgerock.guice.core.InjectorHolder;
 import org.forgerock.oauth2.core.OAuth2Constants;
-import org.forgerock.oauth2.restlet.AccessTokenFlowFinder;
-import org.forgerock.oauth2.restlet.AuthorizeEndpointFilter;
-import org.forgerock.oauth2.restlet.AuthorizeResource;
-import org.forgerock.oauth2.restlet.DeviceCodeResource;
-import org.forgerock.oauth2.restlet.DeviceCodeVerificationResource;
-import org.forgerock.oauth2.restlet.TokenEndpointFilter;
-import org.forgerock.oauth2.restlet.TokenIntrospectionResource;
-import org.forgerock.oauth2.restlet.ValidationServerResource;
+import org.forgerock.oauth2.restlet.*;
 import org.forgerock.openam.audit.AuditEventFactory;
 import org.forgerock.openam.audit.AuditEventPublisher;
 import org.forgerock.openam.core.CoreWrapper;
@@ -149,6 +142,9 @@ public class OAuth2RouterProvider implements Provider<Router> {
         router.attach("/device/code", auditWithOAuthFilter(wrap(DeviceCodeResource.class),
                 formAuditor(RESPONSE_TYPE, GRANT_TYPE, CLIENT_ID, SCOPE), noBodyAuditor()));
 
+        router.attach("/code", auditWithOAuthFilter(wrap(CodeResource.class),
+                formAuditor(RESPONSE_TYPE, GRANT_TYPE, CLIENT_ID, SCOPE, SOCIAL_CODE, SOCIAL_TYPE), noBodyAuditor()));
+        
         return router;
     }
 
