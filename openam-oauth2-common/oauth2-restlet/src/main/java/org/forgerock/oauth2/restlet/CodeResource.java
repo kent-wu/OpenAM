@@ -20,15 +20,11 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.forgerock.oauth2.core.*;
-import org.forgerock.oauth2.core.exceptions.OAuth2Exception;
-import org.forgerock.openam.oauth2.OAuth2Utils;
+import org.forgerock.oauth2.core.OAuth2Request;
+import org.forgerock.oauth2.core.OAuth2RequestFactory;
 import org.forgerock.openam.rest.representations.JacksonRepresentationFactory;
-import org.forgerock.openam.services.baseurl.BaseURLProviderFactory;
-import org.forgerock.openam.utils.StringUtils;
 import org.json.JSONException;
 import org.restlet.Request;
-import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -36,15 +32,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.forgerock.oauth2.core.OAuth2Constants.Custom.*;
-import static org.forgerock.oauth2.core.OAuth2Constants.DeviceCode.*;
-import static org.forgerock.oauth2.core.OAuth2Constants.Params.*;
-import static org.forgerock.openam.utils.StringUtils.isEmpty;
+import static org.forgerock.oauth2.core.OAuth2Constants.Params.SOCIAL_CODE;
+import static org.forgerock.oauth2.core.OAuth2Constants.Params.SOCIAL_TYPE;
 
 /**
  * A Restlet resource for issuing new device codes.
