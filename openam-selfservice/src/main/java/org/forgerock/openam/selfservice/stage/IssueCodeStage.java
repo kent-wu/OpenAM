@@ -61,7 +61,7 @@ public class IssueCodeStage implements ProgressStage<IssueCodeConfig> {
         } catch (InvalidClientException |
                 UnsupportedResponseTypeException |
                 ServerException | InvalidScopeException |
-                CoreTokenException | NotFoundException e) {
+                CoreTokenException | NotFoundException | InvalidGrantException e) {
             throw ResourceException.newResourceException(400, "Fail to issue code: " + e.getMessage());
         }
 
