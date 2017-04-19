@@ -41,6 +41,8 @@ import org.forgerock.openam.selfservice.config.ServiceConfigProviderFactoryImpl;
 import org.forgerock.openam.selfservice.config.beans.ForgottenPasswordConsoleConfig;
 import org.forgerock.openam.selfservice.config.beans.ForgottenUsernameConsoleConfig;
 import org.forgerock.openam.selfservice.config.beans.UserRegistrationConsoleConfig;
+import org.forgerock.openam.selfservice.config.beans.WeiboUserRegistrationConsoleConfig;
+import org.forgerock.openam.selfservice.config.beans.WeiboUserRegistrationConsoleConfig.WeiboUserRegistrationBuilder;
 import org.forgerock.openam.sm.config.ConsoleConfigHandler;
 import org.forgerock.selfservice.core.ProcessStore;
 import org.forgerock.selfservice.core.ProgressStage;
@@ -82,6 +84,7 @@ public final class SelfServiceGuiceModule extends PrivateModule {
 
         // Registration CREST services
         expose(new TypeLiteral<SelfServiceRequestHandler<UserRegistrationConsoleConfig>>() { });
+        expose(new TypeLiteral<SelfServiceRequestHandler<WeiboUserRegistrationConsoleConfig>>() { });
         expose(new TypeLiteral<SelfServiceRequestHandler<ForgottenPasswordConsoleConfig>>() { });
         expose(new TypeLiteral<SelfServiceRequestHandler<ForgottenUsernameConsoleConfig>>() { });
         expose(UserUpdateService.class);
@@ -101,6 +104,16 @@ public final class SelfServiceGuiceModule extends PrivateModule {
                 configHandler, configProviderFactory, serviceFactory);
     }
 
+    @Provides
+    @Singleton
+    SelfServiceRequestHandler<WeiboUserRegistrationConsoleConfig> getWeiboUserRegistrationService(
+            SelfServiceFactory serviceFactory, ConsoleConfigHandler configHandler,
+            ServiceConfigProviderFactory configProviderFactory) {
+
+        return new SelfServiceRequestHandler<>(WeiboUserRegistrationBuilder.class,
+                configHandler, configProviderFactory, serviceFactory);
+    }
+    
     @Provides
     @Singleton
     SelfServiceRequestHandler<ForgottenPasswordConsoleConfig> getForgottenPasswordService(
