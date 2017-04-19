@@ -16,9 +16,6 @@
 
 package org.forgerock.openam.selfservice;
 
-import static org.forgerock.openam.audit.AuditConstants.Component.USERS;
-import static org.forgerock.openam.rest.Routers.ssoToken;
-
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import org.forgerock.http.routing.RoutingMode;
@@ -27,7 +24,11 @@ import org.forgerock.openam.rest.ResourceRouter;
 import org.forgerock.openam.selfservice.config.beans.ForgottenPasswordConsoleConfig;
 import org.forgerock.openam.selfservice.config.beans.ForgottenUsernameConsoleConfig;
 import org.forgerock.openam.selfservice.config.beans.UserRegistrationConsoleConfig;
+import org.forgerock.openam.selfservice.config.beans.WeiboUserRegistrationConsoleConfig;
 import org.forgerock.selfservice.core.UserUpdateService;
+
+import static org.forgerock.openam.audit.AuditConstants.Component.USERS;
+import static org.forgerock.openam.rest.Routers.ssoToken;
 
 /**
  * Provides routes for the user self service services.
@@ -47,6 +48,15 @@ public final class SelfServiceRestRouteProvider extends AbstractRestRouteProvide
                 .toRequestHandler(RoutingMode.STARTS_WITH, Key
                         .get(new TypeLiteral<SelfServiceRequestHandler<UserRegistrationConsoleConfig>>() { }));
 
+        realmRouter
+                .route("/selfservice/userRegistration/weibo")
+                .authenticateWith(
+                        ssoToken()
+                                .exceptRead()
+                                .exceptActions("submitRequirements"))
+                .toRequestHandler(RoutingMode.STARTS_WITH, Key
+                        .get(new TypeLiteral<SelfServiceRequestHandler<WeiboUserRegistrationConsoleConfig>>() { }));
+        
         realmRouter
                 .route("/selfservice/forgottenPassword")
                 .authenticateWith(
