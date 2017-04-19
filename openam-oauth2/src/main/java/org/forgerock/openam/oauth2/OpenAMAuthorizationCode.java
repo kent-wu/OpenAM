@@ -48,6 +48,15 @@ public class OpenAMAuthorizationCode extends AuthorizationCode {
         super(token);
     }
 
+    public static OpenAMAuthorizationCode createOpenAMAuthorizationCode(String code, String resourceOwnerId, String clientId, String redirectUri, Set<String> scope,
+                                                                        String claims, long expiryTime, String nonce, String realm, String authModules, String acr,
+                                                                        String ssoTokenId, String codeChallenge, String codeChallengeMethod) throws InvalidGrantException {
+        return new OpenAMAuthorizationCode(
+                code, resourceOwnerId,
+                clientId, redirectUri, scope, claims, expiryTime,
+                nonce, realm, authModules, acr, ssoTokenId,
+                codeChallenge, codeChallengeMethod);
+    }
     /**
      * Constructs a new OpenAMAuthorizationCode.
      *
